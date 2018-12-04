@@ -46,15 +46,11 @@ class scanner {
     const parseInc = scanObj.parseInc
     let sections = parseInc.sections
     let tokens = parseInc.tokens
-    let spaces = parseInc.spaces
-    let hasTag = parseInc.hasTag
-    let nonSpace = parseInc.nonSpace
 
     let start = 0
     let type = undefined
     let value = undefined
     let chr = undefined
-    let openSection = undefined
     let token = [];
 
     while (!this.eos()) {
@@ -63,38 +59,16 @@ class scanner {
       if (value) {
         for (let i = 0, valueLength = value.length; i < valueLength; ++i) {
           chr = value.charAt(i);
-
-          if (commonUtils.isWhitespace(chr)) {
-            spaces.push(tokens.length);
-          } else {
-            this.nonSpace = true;
-          }
           tokens.push(['text', chr, start, start + 1]);
           start += 1;
-
-          if (chr === '\n') {
-            if (hasTag && !nonSpace) {
-              while (spaces.length)
-                delete tokens[spaces.pop()];
-            } else {
-              spaces = [];
-            }
-
-            this.hasTag = false;
-            this.nonSpace = false;
-          }
         }
       }
 
       // 左侧没有未关闭的标签的时候结束搜索
       if (!this.scan(commonUtils.openingTagRe))
         break;
-
-      hasTag = true;
       type = this.scan(commonUtils.tagRe) || 'name';
       this.scan(commonUtils.whiteRe);
-
-//            debugger
 
       // 对应的key 赋值
       if (type === '=') {
@@ -117,19 +91,21 @@ class scanner {
       token = [type, value, start, this.pos];
       tokens.push(token);
 
-      if (type === '#' || type === '^') {
+      if (type === '#') {
         sections.push(token);
-      } else if (type === '/') {
-        openSection = sections.pop();
-
-        if (!openSection)
-          throw new Error('Unopened section "' + value + '" at ' + start);
-
-        if (openSection[1] !== value)
-          throw new Error('Unclosed section "' + openSection[1] + '" at ' + start);
-      } else if (type === 'name' || type === '{' || type === '&') {
-        nonSpace = true;
       }
+      // else if (type === '/') {
+      //   openSection = sections.pop();
+      //
+      //   if (!openSection)
+      //     throw new Error('Unopened section "' + value + '" at ' + start);
+      //
+      //   if (openSection[1] !== value)
+      //     throw new Error('Unclosed section "' + openSection[1] + '" at ' + start);
+      // }
+      // else if (type === 'name' || type === '{' || type === '&') {
+      //   nonSpace = true;
+      // }
       // else if (type === '=') {
       //     // Set the tags for the next time around.
       //     compileTags(value);
@@ -137,10 +113,10 @@ class scanner {
 
     }
 
-    openSection = sections.pop();
-
-    if (openSection)
-      throw new Error('Unclosed section "' + openSection[1] + '" at ' + scanner.pos);
+    // openSection = sections.pop();
+    //
+    // if (openSection)
+    //   throw new Error('Unclosed section "' + openSection[1] + '" at ' + scanner.pos);
 
     let nextTokensArray = this.nestTokens(this.squashTokens(tokens));
     return nextTokensArray;

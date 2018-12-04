@@ -45,12 +45,12 @@ class pettyTpl {
 // index.version = '1.0.0';
 
 let template = `
-{#if name}
+{{#if name}}
     <h1>吧北京 {{ name }}!</h1>
     <ul>
         <li>{{name1}}</li>
     </ul>
-{#endif}
+{{#endif}}
 `;
 
 (function () {

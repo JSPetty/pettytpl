@@ -52,32 +52,6 @@ class commonUtils {
     return _reg.call(re, string);
   }
 
-
-  // 获取正则匹配对
-  static compileTags(tagsToCompile) {
-    if (typeof tagsToCompile === 'string')
-      tagsToCompile = tagsToCompile.split(commonUtils.spaceRe, 2);
-
-    if (!commonUtils.isArray(tagsToCompile) || tagsToCompile.length !== 2)
-      throw new Error('错误的 tags: ' + tagsToCompile);
-    // /\{\{\s*/
-    let openingTagRe = new RegExp(commonUtils.escapeRegExp(tagsToCompile[0]) + '\\s*');
-    // /\s*\}\}/
-    let closingTagRe = new RegExp('\\s*' + commonUtils.escapeRegExp(tagsToCompile[1]));
-    // /\s*\}\}\}/
-    let closingCurlyRe = new RegExp('\\s*' + commonUtils.escapeRegExp('}' + tagsToCompile[1]));
-
-    commonUtils.openingTagRe = openingTagRe;
-    commonUtils.closingTagRe = closingTagRe;
-    commonUtils.closingCurlyRe = closingCurlyRe;
-
-    return {
-      openingTagRe,
-      closingTagRe,
-      closingCurlyRe
-    }
-  }
-
   static escapeHtml(string) {
     return String(string).replace(/[&<>"'`=\/]/g, function fromEntityMap(s) {
       return entityMap[s];
@@ -96,13 +70,14 @@ commonUtils.whiteRe = /\s*/;
 commonUtils.spaceRe = /\s+/;
 commonUtils.equalsRe = /\s*=/;
 commonUtils.curlyRe = /\s*\}/;
-commonUtils.tagRe = /#|\^|\/|>|\{|&|=|!/;
+// (/(?:(?:(?:[\/|#][(*f)|(else)|(each)])))/) 正则确认
+commonUtils.tagRe = /(?:([\/|#][(if)|(else)|(each)])\}\})|\=|\./;
 
 commonUtils.nonSpaceRe = /\S/;
 
-commonUtils.openingTagRe = /\{\{\s*/;
-commonUtils.closingTagRe = /\s*\}\}/;
-commonUtils.closingCurlyRe = /\s*\}\}\}/;
+commonUtils.openingTagRe = /\{\{\s*/
+commonUtils.closingTagRe = /\s*\}\}/
+commonUtils.closingCurlyRe = /\s*\}\}\}/
 
 commonUtils.tags = ['{{', '}}'];
 // commonUtils.objToStringFunction = Object.prototype.toString();

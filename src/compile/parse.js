@@ -7,8 +7,6 @@ class parse {
     this.spaces = [];
     this.hasTag = false;
     this.nonSpace = false;
-
-
   }
 
   parseTemplate(cfg) {

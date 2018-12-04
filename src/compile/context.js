@@ -7,11 +7,8 @@ class context {
   }
 
   lookup(name) {
-
     var value;
-
     var context = this, names, index, lookupHit = false;
-
     while (context) {
       if (name.indexOf('.') > 0) {
         value = context.vw;
@@ -20,17 +17,14 @@ class context {
         while (value != null && index < names.length) {
           if (index === names.length - 1)
             lookupHit = commonUtils.hasProperty(value, names[index]);
-
           value = value[names[index++]];
         }
       } else {
         value = context.vw[name];
         lookupHit = commonUtils.hasProperty(context.vw, name);
       }
-
       if (lookupHit)
         break;
-
       context = context.parent;
     }
 

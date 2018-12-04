@@ -49,7 +49,7 @@ if (_NODE_ENV === _NODE_ENV_DEV) {
 }
 
 // 后端404
-app.use((req, res, next) = > {
+app.use((req, res, next) => {
   if(_NODE_ENV === _NODE_ENV_PRO
 )
 res.render('index.ejs');
@@ -62,7 +62,7 @@ else
 })
 
 // 如果都没抓住则使用error
-app.use((err, req, res, next) = > {
+app.use((err, req, res, next) => {
   res.locals.message = err.message
 res.locals.error = req.app.get('env') === 'development' ? err : {}
 res.render('error')

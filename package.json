@@ -1,0 +1,57 @@
+{
+  "name": "pettytpl",
+  "version": "1.0.0",
+  "description": "Simple-first JavaScript template engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "template",
+    "javascript",
+    "simple"
+  ],
+  "scripts": {
+    "installDepc": "cross-env NODE_ENV=production npm install",
+    "start": "cross-env NODE_ENV=development node ./server/bin/www",
+    "build": "cross-env NODE_ENV=production webpack --colors --profile --progress --display-modules",
+    "server": "cross-env NODE_ENV=production node ./server/bin/www"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "json-loader": "^0.5.7",
+    "url-loader": "^1.0.1",
+    "webpack-cli": "3.1.1",
+    "whatwg-fetch": "^2.0.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
+    "cookie-parser": "^1.4.3",
+    "cross-env": "^5.1.4",
+    "css-loader": "^0.28.11",
+    "debug": "^3.1.0",
+    "ejs": "^2.5.8",
+    "express": "^4.16.3",
+    "html-webpack-plugin": "^3.1.0",
+    "http-proxy-middleware": "^0.18.0",
+    "iconv-lite": "^0.4.19",
+    "moment": "^2.22.0",
+    "node-fetch": "^2.1.2",
+    "serve-favicon": "^2.5.0",
+    "to-string-loader": "^1.1.5",
+    "webpack": "^4.4.1",
+    "webpack-dev-middleware": "^3.1.0",
+    "webpack-dev-server": "^3.1.1",
+    "webpack-hot-middleware": "^2.21.2"
+  },
+  "author": "jasontao",
+  "license": "MIT"
+}
